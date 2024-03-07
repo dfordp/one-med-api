@@ -1,7 +1,7 @@
 import mongoose from "mongoose";   
 
 
-const linkSchema = new mongoose({
+const linkSchema = new mongoose.Schema({
     user_id : { type: mongoose.Schema.Types.ObjectId,ref: 'User'},
     issues : [{ type: mongoose.Schema.Types.ObjectId,ref: 'Issue'}],
 });

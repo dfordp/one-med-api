@@ -15,6 +15,7 @@ export default Issue;
 // Issue Actions
 export const getIssues = () => Issue.find();
 export const getIssueByName = (name) => Issue.findOne({ name });
+export const getIssueById = (id) => Issue.findById(id);
 export const createIssue = (values) => {
   console.log('Creating issue with values:', values);
   return new Issue(values).save()
