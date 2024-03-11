@@ -12,6 +12,11 @@ const relationSchema = new mongoose.Schema({
     relation : {
         type : String,
         required : true,
+    },
+    appovedByToUser: {
+        type : Boolean,
+        default : false,
+        required : true,
     }
 });
 

@@ -1,6 +1,6 @@
 import express from "express";
 
-import {getAllUsers,getUser,deleteUser,updateUser} from '../controllers/user.controller.js';
+import {getAllUsers,getUser,deleteUser,updateUser,getuserByEmail} from '../controllers/user.controller.js';
 import {isLoggedIn, isOwner} from "../middleware/index.js"
 
 
@@ -10,5 +10,6 @@ router.route('/getUsers').get(isLoggedIn,getAllUsers);
 router.route('/getUser/:id').get(isLoggedIn,isOwner,getUser);
 router.route('/deleteUser/:id').delete(isLoggedIn,isOwner,deleteUser);
 router.route('/updateUser/:id').patch(isLoggedIn,isOwner,updateUser);
+router.route('/getUserByEmail/:email').get(getuserByEmail);
 
 export default router;

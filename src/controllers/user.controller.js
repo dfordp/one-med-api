@@ -1,5 +1,5 @@
 
-import { deleteUserById, getUsers, getUserById } from '../mongodb/models/user.js';
+import { deleteUserById, getUsers, getUserById ,getUserByEmail } from '../mongodb/models/user.js';
 
 
 export const getAllUsers = async (req, res) => {
@@ -68,5 +68,22 @@ export const getAllUsers = async (req, res) => {
     } catch (error) {
       console.log(error);
       return res.sendStatus(400);
+    }
+  };
+
+
+  export const getuserByEmail = async (req, res) => {
+    try {
+      const { email } = req.params;
+      const user = await getUserByEmail(email);
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      return res.json(user);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Server error' });
     }
   };

@@ -5,9 +5,8 @@ const userSchema = new mongoose.Schema({
     name : {type : String , required : true},
     gender : {type :String, enum : ["male","female","others"] ,required : true},
     DOB : {type : Date , required : true},
-    provider : {type :String , required : true},
     image : {type : String,required : true},
-    issues : [{ type: mongoose.Schema.Types.ObjectId,ref: 'Issue'}]
+    issues : [{type : String,required : true}]
 });
 
 
