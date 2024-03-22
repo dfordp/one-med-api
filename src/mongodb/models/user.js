@@ -3,11 +3,11 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
     email : {type : String , required : true},
     name : {type : String , required : true},
-    gender : {type :String, enum : ["male","female","others"] ,required : true},
+    gender : {type :String, enum : ["Male","Female","Others"] ,required : true},
     DOB : {type : Date , required : true},
     image : {type : String,required : true},
     issues : [{type : String,required : true}]
-});
+},{timestamps : true});
 
 
 const User = mongoose.model("User",userSchema);
