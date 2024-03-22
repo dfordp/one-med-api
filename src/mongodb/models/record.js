@@ -5,7 +5,7 @@ const recordSchema = new mongoose.Schema({
     user_id : { type: mongoose.Schema.Types.ObjectId,ref: 'User'},
     attachment : {type : String , required : true },
     issues : [{ type: mongoose.Schema.Types.ObjectId,ref: 'Issue'}],
-    appointment : {type : Date , required: false},
+    appointment : {type : Date , required: true},
     doctor_name : {type : String , required : false},
 });
 

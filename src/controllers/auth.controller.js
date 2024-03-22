@@ -5,33 +5,45 @@ import { generateAuthToken } from '../helpers/index.js';
 
 export const register = async(req,res) => {
     try{
-        const {email , name , gender , DOB ,provider ,image,issues} = req.body;
+        console.log(req.body);
+        if (!req.file) {
+            console.log("No file received");
+            return res.send({
+              success: false
+            });
+        
+          } else {
+            console.log('file received');
+            return res.send({
+              success: true
+            })
+          }
+        // const {email , name , gender , DOB ,image,issues} = req.body;
 
-        if (!email || !name || !gender || !DOB || !provider || !image || !issues) {
-            return res.sendStatus(400);
-        }
+        // if (!email || !name || !gender || !DOB || !image || !issues) {
+        //     return res.sendStatus(400);
+        // }
 
-        const userExists = await getUserByEmail(email);
+        // const userExists = await getUserByEmail(email);
 
-        if (userExists) {
-            return res.status(409).send('Email already exists');
-        }
+        // if (userExists) {
+        //     return res.status(409).send('Email already exists');
+        // }
 
 
 
-        const newUser = await createUser({
-            email : email,
-            name : name,
-            gender : gender,
-            DOB : DOB,
-            provider : provider,
-            image : image,
-            issues : issues
-        });
+        // const newUser = await createUser({
+        //     email : email,
+        //     name : name,
+        //     gender : gender,
+        //     DOB : DOB,
+        //     image : image,
+        //     issues : issues
+        // });
 
-        const token = await generateAuthToken(newUser._id);
-        console.log(token);
-        return res.status(200).json({newUser , token}).end();
+        // const token = await generateAuthToken(newUser._id);
+        // console.log(token);
+        // return res.status(200).json({newUser , token}).end();
 
     }catch(e){
         console.log(e);

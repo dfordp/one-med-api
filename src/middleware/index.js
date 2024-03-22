@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 import User from '../mongodb/models/user.js';
+import multer from "multer";
+
 
 export const isLoggedIn = async (req, res, next) => {
   const token = req.header('Authorization');
@@ -61,3 +63,20 @@ export const isOwner = async (req, res, next) => {
     });
   }
 };
+
+
+
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "./public/temp")
+    },
+    filename: function (req, file, cb) {
+      
+      cb(null, file.originalname)
+    }
+  })
+  
+export const upload = multer({ 
+    storage, 
+})
