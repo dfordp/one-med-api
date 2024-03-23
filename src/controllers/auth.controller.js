@@ -42,24 +42,3 @@ export const register = async(req,res) => {
     }
 }
 
-export const login = async (req,res) => {
-    try {
-        const { email } = req.body;
-  
-        if (!email || !password) {
-          return res.sendStatus(400);
-        }
-        
-        const user = await getUserByEmail(email);
-
-        if (!user) {
-            return res.status(401).send('Invalid email or password');
-        }
-
-        const token = await generateAuthToken(user._id);
-        return res.status(200).json({user,token}).end();
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('Server error');
-    }
-}

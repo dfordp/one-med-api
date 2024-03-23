@@ -1,4 +1,5 @@
 
+import { generateAuthToken } from '../helpers/index.js';
 import { deleteUserById, getUsers, getUserById ,getUserByEmail } from '../mongodb/models/user.js';
 
 
@@ -80,8 +81,10 @@ export const getAllUsers = async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
+
+      const token = await generateAuthToken(user._id);
   
-      return res.json(user);
+      return res.json({user , token});
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Server error' });

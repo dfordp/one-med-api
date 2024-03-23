@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api/auth', authRouter);
-app.use('/api/users', userRouter);
+app.use('/api/user', userRouter);
 app.use('/api/issues', issueRouter);
 app.use('/api/links', linkRouter);
 app.use('/api/records', recordRouter);
