@@ -38,7 +38,7 @@ export const isOwner = async (req, res, next) => {
     const token = req.header('Authorization'); 
     const decodedToken = jwt.verify(token, process.env.AUTH_SECRET);
     const currentUserId = decodedToken._id;
-
+    
 
     if (!id|| !currentUserId) {
       return res.status(400).json({
