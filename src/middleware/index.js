@@ -13,7 +13,7 @@ export const isLoggedIn = async (req, res, next) => {
     });
   }
   try {
-    const userId = jwt.verify(token, process.env.SECRET);
+    const userId = jwt.verify(token, process.env.AUTH_SECRET);
     const user = await User.findById(userId.id);
     req.user = user;
     next();
@@ -36,7 +36,7 @@ export const isOwner = async (req, res, next) => {
   try {
     const { id } = req.params;
     const token = req.header('Authorization'); 
-    const decodedToken = jwt.verify(token, process.env.SECRET);
+    const decodedToken = jwt.verify(token, process.env.AUTH_SECRET);
     const currentUserId = decodedToken._id;
 
 

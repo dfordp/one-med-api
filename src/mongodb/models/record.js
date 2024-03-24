@@ -4,10 +4,10 @@ import mongoose from "mongoose";
 const recordSchema = new mongoose.Schema({
     user_id : { type: mongoose.Schema.Types.ObjectId,ref: 'User'},
     attachment : {type : String , required : true },
-    issues : [{ type: mongoose.Schema.Types.ObjectId,ref: 'Issue'}],
+    issue : { type: mongoose.Schema.Types.ObjectId,ref: 'Issue'},
     appointment : {type : Date , required: true},
     doctor_name : {type : String , required : false},
-});
+}, {timestamps:true});
 
 
 const Record = mongoose.model("Record",recordSchema);
@@ -16,7 +16,8 @@ export default Record;
 
 // Record Actions
 export const getRecords = () => Record.find();
-export const getRecordByUserId = (user_id) => Record.find({ user_id });
+export const getRecordById = (_id) => Record.findById(_id);
+// export const getRecordByUserId = (user_id) => Record.find({ user_id  });
 export const createRecord = (values) => {
   console.log('Creating record with values:', values);
   return new Record(values).save()

@@ -1,4 +1,5 @@
-import { getRecords, getRecordByUserId, createRecord, deleteRecordById, updateRecordById } from '../mongodb/models/record.js';
+import { getRecords, getRecordById, createRecord, deleteRecordById, updateRecordById } from '../mongodb/models/record.js';
+import { uploadOnCloudinary } from '../utils/cloudinary.js';
 
 export const getAllRecords = async (req, res) => {
   try {
@@ -13,8 +14,8 @@ export const getAllRecords = async (req, res) => {
 
 export const getRecord = async (req, res) => {
   try {
-    const { user_id } = req.params;
-    const record = await getRecordByUserId(user_id);
+    const { _id  } = req.params;
+    const record = await getRecordById(_id);
 
     if (!record) {
       return res.status(404).json({ message: 'Record not found' });
@@ -29,13 +30,18 @@ export const getRecord = async (req, res) => {
 
 export const createNewRecord = async (req, res) => {
   try {
-    const { user_id, attachment, issues, appointment, doctor_name } = req.body;
+    const { user_id, recordName, attachments, issues, appointment, doctor_name } = req.body;
+    const {path} = req.file;
 
-    if (!user_id || !attachment || !issues) {
+    if (!user_id || !issues || !recordName) {
       return res.status(400).json({ message: 'User ID, attachment and issues are required' });
     }
 
-    const record = await createRecord({ user_id, attachment, issues, appointment, doctor_name });
+    const imageURL = await uploadOnCloudinary(path);
+    const image = imageURL.secure_url;
+
+
+    const record = await createRecord({ user_id, attachment:image, issues, appointment, doctor_name });
 
     return res.status(201).json(record);
   } catch (error) {
