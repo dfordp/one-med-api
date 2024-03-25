@@ -13,9 +13,14 @@ const relationSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
+    relativeName: {
+        type : String,
+        required : true,
+    },
     appovedByToUser: {
-        type : Boolean,
-        default : false,
+        type : String,
+        default : "pending",
+        enum : ["pending", "accepted" , "rejected"],
         required : true,
     }
 });

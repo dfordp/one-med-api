@@ -47,21 +47,24 @@ export const getAllUsers = async (req, res) => {
   export const updateUser = async (req, res) => {
     try {
       const { id } = req.params;
-      const { email} = req.body;
-  
-      if (!email){
+      // const { email, name, gender, DOB, image, issues } = req.body;
+     const { issues } = req.body;
+      if (!id){
         return res.sendStatus(400);
       }
   
-      const user = await User.findById(id);
+      const user = await getUserById(id);
   
       if (!user) {
         return res.sendStatus(404);
       }
   
-      if (email) {
-        user.email = email;
-      }
+      // user.email = email;
+      // user.name = name;
+      // user.gender = gender;
+      // user.DOB = DOB;
+      // user.image = image;
+      user.issues = issues;
   
       await user.save();
   
@@ -69,6 +72,24 @@ export const getAllUsers = async (req, res) => {
     } catch (error) {
       console.log(error);
       return res.sendStatus(400);
+    }
+  };
+
+  export const getuserByEmailAuth = async (req, res) => {
+    try {
+      const { email } = req.params;
+      const user = await getUserByEmail(email);
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+
+      const token = await generateAuthToken(user._id);
+  
+      return res.json({user , token});
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Server error' });
     }
   };
 
@@ -81,10 +102,8 @@ export const getAllUsers = async (req, res) => {
       if (!user) {
         return res.status(404).json({ message: 'User not found' });
       }
-
-      const token = await generateAuthToken(user._id);
   
-      return res.json({user , token});
+      return res.json(user);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ message: 'Server error' });

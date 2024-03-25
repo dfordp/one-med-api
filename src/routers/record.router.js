@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.route('/getRecords').get(isLoggedIn, getAllRecords);
 router.get('/getUserRecords/:id', isLoggedIn, isOwner,getRecordsByUserId);
+router.get('/getRelativeRecords/:id', isLoggedIn,getRecordsByUserId);
 router.route('/getRecord/:id').get(isLoggedIn, getRecord);
 router.route('/deleteRecord/:id').delete(isLoggedIn,deleteRecord);
 router.route('/updateRecord/:id').patch(isLoggedIn,updateRecord);

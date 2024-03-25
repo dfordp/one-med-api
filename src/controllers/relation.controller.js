@@ -13,8 +13,8 @@ export const getAllRelations = async (req, res) => {
 
 export const getRelationFrom = async (req, res) => {
   try {
-    const { from_id } = req.params;
-    const relation = await getRelationByFromId(from_id);
+    const { id } = req.params;
+    const relation = await getRelationByFromId(id);
 
     if (!relation) {
       return res.status(404).json({ message: 'Relation not found' });
@@ -29,8 +29,8 @@ export const getRelationFrom = async (req, res) => {
 
 export const getRelationTo = async (req, res) => {
   try {
-    const { to_id } = req.params;
-    const relation = await getRelationByToId(to_id);
+    const { id } = req.params;
+    const relation = await getRelationByToId(id);
 
     if (!relation) {
       return res.status(404).json({ message: 'Relation not found' });
@@ -45,13 +45,16 @@ export const getRelationTo = async (req, res) => {
 
 export const createNewRelation = async (req, res) => {
   try {
-    const { from_id, to_id, relation } = req.body;
+    const { from_id, to_id, relationType ,relativeName } = req.body;
 
-    if (!from_id || !to_id || !relation) {
+    console.log(req.body);
+    console.log(req.body);
+
+    if (!from_id || !to_id || !relationType) {
       return res.status(400).json({ message: 'From ID, To ID and relation are required' });
     }
 
-    const newRelation = await createRelation({ from_id, to_id, relation });
+    const newRelation = await createRelation({ from_id, to_id, relation : relationType ,relativeName : relativeName  });
 
     return res.status(201).json(newRelation);
   } catch (error) {
@@ -76,13 +79,13 @@ export const deleteRelation = async (req, res) => {
 export const updateRelation = async (req, res) => {
   try {
     const { id } = req.params;
-    const { from_id, to_id, relation } = req.body;
+    const { appovedByToUser } = req.body;
 
-    if (!from_id || !to_id || !relation){
+    if (!id){
       return res.sendStatus(400);
     }
 
-    const updatedRelation = await updateRelationById(id, { from_id, to_id, relation });
+    const updatedRelation = await updateRelationById(id, { appovedByToUser });
 
     return res.status(200).json(updatedRelation).end();
   } catch (error) {
