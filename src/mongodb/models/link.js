@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 
 const linkSchema = new mongoose.Schema({
     user_id : { type: mongoose.Schema.Types.ObjectId,ref: 'User'},
-    issues : [{ type: mongoose.Schema.Types.ObjectId,ref: 'Issue'}],
+    name : {type : String, required : true},
+    relatedIssue : {type : String, required : true},
 });
 
 const Link = mongoose.model("Link",linkSchema);
@@ -12,6 +13,7 @@ export default Link;
 
 // Link Actions
 export const getLinks = () => Link.find();
+export const getLinkById = (id) => Link.findById(id);
 export const getLinkByUserId = (user_id) => Link.find({ user_id });
 export const createLink = (values) => {
   console.log('Creating link with values:', values);
