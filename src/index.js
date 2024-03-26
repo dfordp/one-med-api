@@ -13,7 +13,7 @@ import connectDB from "./mongodb/index.js";
 const app = express();
 app.use(cors({
     origin: function (origin, callback) {
-      const allowedOrigins = ['http://localhost:5173'];
+      const allowedOrigins = ['http://localhost:5173' , 'https://one-med-client.vercel.app' ];
       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true)
       } else {
